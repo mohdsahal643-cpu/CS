@@ -10,8 +10,8 @@ const siteData = {
   whatsapp: "[PLACEHOLDER: WhatsApp business number]",
   email: "[PLACEHOLDER: Primary email address]",
   address: "[PLACEHOLDER: Full Santacruz East, Mumbai office address]",
-  psara: "[PLACEHOLDER: PSARA licence number]",
-  iso: "[PLACEHOLDER: ISO 9001 certificate number]",
+  psara: "PSA/L/44/MH/2023/AUG/3/3227",
+  iso: "2024031235",
   nabh: "[PLACEHOLDER: NABH training reference]",
   coordinates: { lat: "19.0753", lng: "72.8552" },
   assets: {
@@ -222,11 +222,6 @@ const siteData = {
     { slug: "banking", title: "Banking and financial services", text: "High-trust environments where every security protocol is non-negotiable.", image: "banking" },
     { slug: "residential", title: "Residential and housing societies", text: "Community safety and consistency delivered every morning and every night.", image: "residential" },
   ],
-  blogPosts: [
-    { slug: "psara-compliance-checklist", category: "Compliance", title: "PSARA compliance checklist for facility managers", date: "[PLACEHOLDER: publish date]", readTime: "8 min read" },
-    { slug: "audit-ready-housekeeping-vendor", category: "Facility management", title: "How to audit-ready your housekeeping vendor", date: "[PLACEHOLDER: publish date]", readTime: "6 min read" },
-    { slug: "qr-vs-gps-patrol-tracking", category: "Security", title: "QR vs GPS patrol tracking: what actually works", date: "[PLACEHOLDER: publish date]", readTime: "7 min read" },
-  ],
 };
 
 const iconSet = {
@@ -266,7 +261,6 @@ function assetCard(assetKey) {
       <img src="${asset.src}" alt="${asset.title}">
       <div class="asset-overlay"></div>
       <figcaption class="asset-copy">
-        <small>${asset.usage}</small>
         <strong>${asset.title}</strong>
       </figcaption>
     </figure>
@@ -301,8 +295,6 @@ function headerTemplate() {
           </div>
           <a href="/industries.html">Industries</a>
           <a href="/about.html">About</a>
-          <a href="/blog/index.html">Blog</a>
-          <a href="/careers.html">Careers</a>
           <a href="/contact.html">Contact</a>
         </nav>
         <div class="header-actions">
@@ -348,8 +340,6 @@ function footerTemplate() {
           <div class="footer-links">
             <a href="/about.html">About</a>
             <a href="/industries.html">Industries</a>
-            <a href="/careers.html">Careers</a>
-            <a href="/blog/index.html">Blog</a>
             <a href="/contact.html">Contact</a>
           </div>
         </div>
@@ -435,7 +425,6 @@ function renderServicePage() {
   const assessment = document.querySelectorAll("[data-assessment-label]");
   const asset = document.querySelector("[data-service-asset]");
 
-  document.title = service.metaTitle;
   if (hero) {
     hero.innerHTML = `
       <div class="hero-media"><img src="${siteData.assets[service.image].src}" alt="${service.title}"></div>
@@ -472,34 +461,6 @@ function renderServicePage() {
   if (closing) closing.textContent = service.closing;
   assessment.forEach((node) => { node.textContent = service.assessmentLabel; });
   if (asset) asset.innerHTML = assetCard(service.image);
-}
-
-function renderBlogIndex() {
-  const target = document.querySelector("[data-blog-grid]");
-  if (!target) return;
-  target.innerHTML = siteData.blogPosts.map((post) => `
-    <a class="card" href="/blog/${post.slug}.html">
-      <div class="eyebrow" style="color: var(--steel-blue);">${post.category}</div>
-      <h3 class="card-title" style="margin-top: 1rem;">${post.title}</h3>
-      <p class="card-copy" style="margin-top: 1rem;">${post.date} | ${post.readTime}</p>
-    </a>
-  `).join("");
-}
-
-function renderBlogPost() {
-  const slug = document.body.dataset.slug;
-  const post = siteData.blogPosts.find((item) => item.slug === slug);
-  const target = document.querySelector("[data-blog-post]");
-  if (!post || !target) return;
-  document.title = `${post.title} | Complete Solutions`;
-  target.innerHTML = `
-    <div class="eyebrow" style="color: var(--steel-blue);">${post.category}</div>
-    <h1 class="hero-title" style="color: var(--text-dark); margin-top: 1rem; font-size: clamp(2rem, 4.5vw, 3.75rem);">${post.title}</h1>
-    <p class="card-copy" style="margin-top: 1rem;">${post.date} | ${post.readTime}</p>
-    <div class="article-box">
-      <p>[PLACEHOLDER: Final article content pending source review and launch approval.]</p>
-    </div>
-  `;
 }
 
 function renderContactDetails() {
@@ -578,8 +539,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-stats]").forEach(renderStats);
   renderTechCards();
   renderServicePage();
-  renderBlogIndex();
-  renderBlogPost();
   renderContactDetails();
   attachForms();
   initIndustryShowcase();
