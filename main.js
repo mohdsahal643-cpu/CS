@@ -6,10 +6,13 @@ const commonServiceFeatures = [
 ];
 
 const siteData = {
-  phone: "[PLACEHOLDER: Main phone number]",
-  whatsapp: "[PLACEHOLDER: WhatsApp business number]",
-  email: "[PLACEHOLDER: Primary email address]",
-  address: "[PLACEHOLDER: Full Santacruz East, Mumbai office address]",
+  phone: "+91 87797 11055",
+  phoneHref: "tel:+918779711055",
+  whatsapp: "+91 98702 79603",
+  whatsappHref: "https://wa.me/919870279603",
+  email: "info@completesolutions.co.in",
+  emailHref: "mailto:info@completesolutions.co.in",
+  address: "Corporate Office Mumbai, 1st Floor, Vinay Bhavya Complex, A-102, 159, CST Road, Kalina, Santacruz East, Mumbai, Maharashtra \u2013 400098",
   psara: "PSA/L/44/MH/2023/AUG/3/3227",
   iso: "2024031235",
   nabh: "[PLACEHOLDER: NABH training reference]",
@@ -259,10 +262,6 @@ function assetCard(assetKey) {
   return `
     <figure class="asset" style="aspect-ratio: ${asset.ratio};">
       <img src="${asset.src}" alt="${asset.title}">
-      <div class="asset-overlay"></div>
-      <figcaption class="asset-copy">
-        <strong>${asset.title}</strong>
-      </figcaption>
     </figure>
   `;
 }
@@ -288,7 +287,10 @@ function headerTemplate() {
         </a>
         <nav class="nav" aria-label="Primary">
           <div class="nav-services">
-            <a href="/services/security.html">Services</a>
+            <button class="nav-services__trigger" type="button" aria-expanded="false">
+              <span>Services</span>
+              <svg class="nav-chevron" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5"></path></svg>
+            </button>
             <div class="nav-dropdown">
               ${services.map(([label, href]) => `<a href="${href}">${label}</a>`).join("")}
             </div>
@@ -298,11 +300,42 @@ function headerTemplate() {
           <a href="/contact.html">Contact</a>
         </nav>
         <div class="header-actions">
-          <a class="btn btn-ghost" href="https://wa.me/91XXXXXXXXXX?text=Hi,%20I%27d%20like%20to%20enquire%20about%20your%20services.">WhatsApp</a>
+          <a class="btn btn-ghost header-whatsapp" href="${siteData.whatsappHref}">WhatsApp</a>
           <a class="btn btn-quote" href="/contact.html#quote">Get a quote</a>
-          <button class="mobile-toggle" type="button" aria-label="Toggle navigation">Menu</button>
+          <button class="mobile-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </div>
+      <div class="mobile-menu-backdrop" data-mobile-menu-close></div>
+      <aside class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+        <div class="mobile-menu__top">
+          <a class="brand" href="/index.html">
+            <span class="brand-mark"><img src="/assets/logo/Logo-2048x1468.png" alt="Complete Solutions logo"></span>
+            <span class="brand-name">Complete Solutions</span>
+          </a>
+        </div>
+        <nav class="mobile-menu__nav" aria-label="Mobile primary">
+          <div class="mobile-menu__services">
+            <button class="mobile-services__trigger" type="button" aria-expanded="false" aria-controls="mobile-services-submenu" data-mobile-services-toggle>
+              <span>Services</span>
+              <svg class="nav-chevron" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5"></path></svg>
+            </button>
+            <div class="mobile-services__submenu" id="mobile-services-submenu" hidden>
+              <a href="/services/security.html">Security Services</a>
+              <a href="/services/housekeeping.html">Housekeeping Services</a>
+              <a href="/services/maintenance.html">Maintenance Services</a>
+              <a href="/services/office-support.html">Office Support Services</a>
+              <a href="/services/pest-control.html">Sanitization &amp; Pest Control Services</a>
+            </div>
+          </div>
+          <a href="/industries.html">Industries</a>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+        </nav>
+        <a class="mobile-menu__whatsapp" href="${siteData.whatsappHref}">WhatsApp</a>
+        <a class="btn btn-assessment mobile-menu__quote" href="/contact.html#quote">Get a quote</a>
+      </aside>
     </header>
   `;
 }
@@ -320,8 +353,6 @@ function footerTemplate() {
           </a>
           <div class="footer-copy">
             <p>High-reliability facility management built on discipline, auditability, and systems thinking.</p>
-            <p>PSARA: ${siteData.psara}</p>
-            <p>ISO: ${siteData.iso}</p>
           </div>
         </div>
         <div>
@@ -346,9 +377,9 @@ function footerTemplate() {
         <div>
           <h3>Contact</h3>
           <div class="footer-links">
-            <span>Phone: ${siteData.phone}</span>
-            <span>WhatsApp: ${siteData.whatsapp}</span>
-            <span>Email: ${siteData.email}</span>
+            <a href="${siteData.phoneHref}">Phone: ${siteData.phone}</a>
+            <a href="${siteData.whatsappHref}">WhatsApp: ${siteData.whatsapp}</a>
+            <a href="${siteData.emailHref}">Email: ${siteData.email}</a>
             <span>Office: ${siteData.address}</span>
           </div>
         </div>
@@ -356,7 +387,10 @@ function footerTemplate() {
       <div class="footer-bottom">
         <div class="container footer-bottom-inner">
           <span>Copyright ${new Date().getFullYear()} Complete Solutions. All rights reserved.</span>
-          <span>PSARA Licence No. ${siteData.psara}</span>
+          <div class="footer-certifications" aria-label="Licenses and certifications">
+            <a class="footer-certification-pill" href="/licenses.html">PSARA ${siteData.psara}</a>
+            <a class="footer-certification-pill" href="/licenses.html">ISO 9001 ${siteData.iso}</a>
+          </div>
         </div>
       </div>
     </footer>
@@ -385,8 +419,99 @@ function mountLayout() {
   setActiveNav();
   const toggle = document.querySelector(".mobile-toggle");
   const header = document.querySelector(".header");
-  if (toggle && header) {
-    toggle.addEventListener("click", () => header.classList.toggle("mobile-open"));
+  const menu = document.querySelector(".mobile-menu");
+  const closeTargets = document.querySelectorAll("[data-mobile-menu-close], .mobile-menu a");
+  const desktopServices = document.querySelector(".nav-services");
+  const desktopServicesTrigger = document.querySelector(".nav-services__trigger");
+  const mobileServices = document.querySelector(".mobile-menu__services");
+  const mobileServicesToggle = document.querySelector("[data-mobile-services-toggle]");
+  const mobileServicesSubmenu = document.querySelector(".mobile-services__submenu");
+  let previousFocus = null;
+
+  const setDesktopServicesOpen = (open) => {
+    if (!desktopServices || !desktopServicesTrigger) return;
+    desktopServices.classList.toggle("is-open", open);
+    desktopServicesTrigger.setAttribute("aria-expanded", String(open));
+  };
+
+  const setMobileServicesOpen = (open) => {
+    if (!mobileServices || !mobileServicesToggle || !mobileServicesSubmenu) return;
+    mobileServices.classList.toggle("is-open", open);
+    mobileServicesToggle.setAttribute("aria-expanded", String(open));
+    mobileServicesSubmenu.hidden = !open;
+  };
+
+  desktopServicesTrigger?.addEventListener("click", () => {
+    if (window.innerWidth < 768) return;
+    setDesktopServicesOpen(!desktopServices.classList.contains("is-open"));
+  });
+
+  mobileServicesToggle?.addEventListener("click", (event) => {
+    if (window.innerWidth >= 768) return;
+    event.preventDefault();
+    setMobileServicesOpen(!mobileServices.classList.contains("is-open"));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (desktopServices && !desktopServices.contains(event.target)) setDesktopServicesOpen(false);
+  });
+
+  if (toggle && header && menu) {
+    const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    const setMenuOpen = (open) => {
+      header.classList.toggle("mobile-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+      menu.setAttribute("aria-hidden", String(!open));
+      document.body.classList.toggle("menu-open", open);
+      if (!open) setMobileServicesOpen(false);
+
+      if (open) {
+        previousFocus = document.activeElement;
+        const firstFocusable = menu.querySelector(focusableSelector);
+        if (firstFocusable) requestAnimationFrame(() => firstFocusable.focus());
+      } else if (previousFocus instanceof HTMLElement) {
+        previousFocus.focus();
+      }
+    };
+
+    toggle.addEventListener("click", () => setMenuOpen(!header.classList.contains("mobile-open")));
+    closeTargets.forEach((target) => target.addEventListener("click", () => setMenuOpen(false)));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && desktopServices?.classList.contains("is-open")) {
+        setDesktopServicesOpen(false);
+        desktopServicesTrigger.focus();
+      }
+      if (!header.classList.contains("mobile-open")) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenuOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const focusable = [toggle, ...menu.querySelectorAll(focusableSelector)].filter((element) => element.offsetParent !== null);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768) {
+        if (header.classList.contains("mobile-open")) setMenuOpen(false);
+        setMobileServicesOpen(false);
+      } else {
+        setDesktopServicesOpen(false);
+      }
+    });
   }
 }
 
@@ -482,7 +607,9 @@ function validateForm(form) {
     }
   });
   const phone = form.querySelector('input[name="phone"]');
-  if (phone && phone.value && !/^[6-9]\d{9}$/.test(phone.value.trim())) {
+  const phoneDigits = phone ? phone.value.replace(/\D/g, "") : "";
+  const localPhone = phoneDigits.length === 12 && phoneDigits.startsWith("91") ? phoneDigits.slice(2) : phoneDigits;
+  if (phone && phone.value && !/^[6-9]\d{9}$/.test(localPhone)) {
     const error = form.querySelector('[data-error-for="phone"]');
     if (error) error.textContent = "Enter a valid 10-digit Indian mobile number.";
     valid = false;
@@ -503,14 +630,16 @@ function attachForms() {
       const feedback = form.querySelector("[data-form-feedback]");
       if (!validateForm(form)) {
         if (feedback) {
-          feedback.className = "error-text";
+          feedback.classList.remove("success-text");
+          feedback.classList.add("error-text");
           feedback.textContent = "Please correct the highlighted fields.";
         }
         return;
       }
       if (feedback) {
-        feedback.className = "success-text";
-        feedback.textContent = "Thank you. Your request has been recorded. [PLACEHOLDER: connect to CRM webhook or email endpoint]";
+        feedback.classList.remove("error-text");
+        feedback.classList.add("success-text");
+        feedback.textContent = "Thank you. Your request has been recorded. Our team will contact you shortly.";
       }
       form.reset();
     });

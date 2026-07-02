@@ -32,63 +32,81 @@
 
     <section class="section section-muted">
       <div class="container contact-grid">
-        <article class="card"><h3 class="card-title">Call us</h3><p class="card-copy" data-phone></p></article>
-        <article class="card"><h3 class="card-title">WhatsApp</h3><p class="card-copy" data-whatsapp></p></article>
-        <article class="card"><h3 class="card-title">Email us</h3><p class="card-copy" data-email></p></article>
-        <article class="card"><h3 class="card-title">Visit our office</h3><p class="card-copy" data-address></p></article>
+        <article class="card contact-card">
+          <div class="contact-card__heading">
+            <img class="contact-card__icon-image" src="/assets/icons/phone-black.png" alt="" aria-hidden="true">
+            <h3 class="card-title">Call us</h3>
+          </div>
+          <a class="card-copy" data-phone href="tel:+918779711055"></a>
+        </article>
+        <article class="card contact-card">
+          <div class="contact-card__heading">
+            <img class="contact-card__icon-image" src="/assets/icons/whatsapp-black.png" alt="" aria-hidden="true">
+            <h3 class="card-title">WhatsApp</h3>
+          </div>
+          <a class="card-copy" data-whatsapp href="https://wa.me/919870279603" target="_blank" rel="noopener noreferrer"></a>
+        </article>
+        <article class="card contact-card">
+          <div class="contact-card__heading">
+            <img class="contact-card__icon-image" src="/assets/icons/email-black.png" alt="" aria-hidden="true">
+            <h3 class="card-title">Email us</h3>
+          </div>
+          <a class="card-copy" data-email href="mailto:info@completesolutions.co.in"></a>
+        </article>
+        <article class="card contact-card">
+          <div class="contact-card__heading">
+            <img class="contact-card__icon-image" src="/assets/icons/building-black.png" alt="" aria-hidden="true">
+            <h3 class="card-title">Visit our office</h3>
+          </div>
+          <p class="card-copy" data-address></p>
+        </article>
       </div>
     </section>
 
-    <section class="section section-light">
-      <div class="container map-and-forms">
-        <div class="map-frame">
+    <section class="section section-light contact-enquiry-section">
+      <div class="container contact-enquiry">
+        <div class="map-frame contact-enquiry__map">
           <iframe title="Complete Solutions Santacruz East map" src="https://www.google.com/maps?q=19.0753,72.8552&z=15&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <div class="forms">
-          <form class="form-card muted" data-form id="assessment">
-            <h2 class="section-title" style="font-size: 2rem;">Assessment form</h2>
-            <p class="lead">For enterprise, multi-site, and compliance-critical environments.</p>
-            <div class="form-grid">
-              <div class="field"><label for="a-name">Your name *</label><input id="a-name" name="name" required><div class="error-text" data-error-for="name"></div></div>
-              <div class="field"><label for="a-company">Company name *</label><input id="a-company" name="company" required><div class="error-text" data-error-for="company"></div></div>
-              <div class="field"><label for="a-job">Job title *</label><input id="a-job" name="jobTitle" required><div class="error-text" data-error-for="jobTitle"></div></div>
-              <div class="field"><label for="a-email">Email address *</label><input id="a-email" name="email" type="email" required><div class="error-text" data-error-for="email"></div></div>
-              <div class="field"><label for="a-phone">Phone number *</label><input id="a-phone" name="phone" required><div class="error-text" data-error-for="phone"></div></div>
-              <div class="field"><label for="a-sector">Sector *</label><select id="a-sector" name="sector" required><option value="">Select</option><option>IT Park</option><option>Manufacturing</option><option>Banking & Finance</option><option>Residential</option><option>Healthcare</option><option>Other</option></select><div class="error-text" data-error-for="sector"></div></div>
-              <div class="field"><label for="a-sites">Number of sites *</label><select id="a-sites" name="sites" required><option value="">Select</option><option>1</option><option>2-5</option><option>6-10</option><option>10+</option></select><div class="error-text" data-error-for="sites"></div></div>
-              <div class="field"><label for="a-driver">Compliance driver *</label><select id="a-driver" name="complianceDriver" required><option value="">Select</option><option>ISO audit</option><option>NABH accreditation</option><option>Client/tenant requirement</option><option>Internal policy</option><option>Regulatory</option><option>Other</option></select><div class="error-text" data-error-for="complianceDriver"></div></div>
-              <div class="field-full">
-                <label>Current challenge</label>
-                <div class="check-grid">
-                  <label class="check"><input type="checkbox" name="challenge" value="Compliance gaps">Compliance gaps</label>
-                  <label class="check"><input type="checkbox" name="challenge" value="High vendor turnover">High vendor turnover</label>
-                  <label class="check"><input type="checkbox" name="challenge" value="Lack of documentation">Lack of documentation</label>
-                  <label class="check"><input type="checkbox" name="challenge" value="Poor response time">Poor response time</label>
-                  <label class="check"><input type="checkbox" name="challenge" value="Audit failures">Audit failures</label>
-                  <label class="check"><input type="checkbox" name="challenge" value="Other">Other</label>
-                </div>
-              </div>
-              <div class="field-full"><label for="a-req">Brief description of requirement</label><textarea id="a-req" name="requirement"></textarea></div>
-              <div class="field-full"><label for="a-pref">Preferred contact method</label><select id="a-pref" name="preferredContact"><option>Phone</option><option>Email</option><option>WhatsApp</option></select></div>
+        <div class="contact-enquiry__layout">
+          <div class="contact-details-list" aria-label="Contact details">
+            <div class="contact-detail-row">
+              <div class="contact-detail-row__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.4 7-12a7 7 0 1 0-14 0c0 6.6 7 12 7 12"></path><circle cx="12" cy="9" r="2.5"></circle></svg></div>
+              <div><strong>Visit our office</strong><span>Corporate Office Mumbai, 1st Floor, Vinay Bhavya Complex, A-102, 159, CST Road, Kalina, Santacruz East, Mumbai, Maharashtra &ndash; 400098</span></div>
             </div>
-            <div class="btn-row" style="margin-top: 1rem;"><button class="btn btn-assessment" type="submit">Submit assessment request</button></div>
-            <p data-form-feedback></p>
-          </form>
+            <div class="contact-detail-row">
+              <div class="contact-detail-row__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></div>
+              <div><strong>Call us</strong><a href="tel:+918779711055">+91 87797 11055</a></div>
+            </div>
+            <div class="contact-detail-row">
+              <div class="contact-detail-row__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21l1.65-4.8a9 9 0 1 1 3.15 3.15L3 21"></path><path d="M9 8.5c.5 2 2 3.5 4 4l1-1c.3-.3.7-.4 1.1-.2l2.4 1.1"></path></svg></div>
+              <div><strong>WhatsApp</strong><a href="https://wa.me/919870279603" target="_blank" rel="noopener noreferrer">+91 98702 79603</a></div>
+            </div>
+            <div class="contact-detail-row">
+              <div class="contact-detail-row__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></div>
+              <div><strong>Email us</strong><a href="mailto:info@completesolutions.co.in">info@completesolutions.co.in</a></div>
+            </div>
+          </div>
 
-          <form class="form-card" data-form id="quote">
-            <h2 class="section-title" style="font-size: 2rem;">Quote form</h2>
-            <p class="lead">For single facilities, societies, and SMB operations.</p>
-            <div class="form-grid">
-              <div class="field"><label for="q-name">Your name *</label><input id="q-name" name="name" required><div class="error-text" data-error-for="name"></div></div>
-              <div class="field"><label for="q-phone">Phone number *</label><input id="q-phone" name="phone" required><div class="error-text" data-error-for="phone"></div></div>
-              <div class="field"><label for="q-location">Location / area in Mumbai *</label><input id="q-location" name="location" required><div class="error-text" data-error-for="location"></div></div>
-              <div class="field"><label for="q-size">Property size *</label><select id="q-size" name="propertySize" required><option value="">Select</option><option>&lt;10,000 sq ft</option><option>10,000-50,000</option><option>50,000-2L</option><option>2L+ sq ft</option></select><div class="error-text" data-error-for="propertySize"></div></div>
-              <div class="field-full"><label for="q-service">Service needed *</label><select id="q-service" name="service" required><option value="">Select</option><option>Security</option><option>Housekeeping</option><option>Maintenance</option><option>Office Support</option><option>Pest Control</option><option>Property Management</option><option>Multiple services</option></select><div class="error-text" data-error-for="service"></div></div>
-              <div class="field-full"><label for="q-message">Message</label><textarea id="q-message" name="message"></textarea></div>
+          <div class="unified-form-panel">
+            <span class="form-anchor" id="assessment" aria-hidden="true"></span>
+            <span class="form-anchor" id="quote" aria-hidden="true"></span>
+            <div class="unified-form-panel__header">
+              <div class="unified-form-panel__eyebrow">Get in touch</div>
+              <h2>Send us an enquiry</h2>
             </div>
-            <div class="btn-row" style="margin-top: 1rem;"><button class="btn btn-quote" type="submit">Submit quote request</button></div>
-            <p data-form-feedback></p>
-          </form>
+            <form class="unified-enquiry-form" data-form id="enquiry" novalidate>
+              <div class="unified-form__fields">
+                <div class="field"><label for="enquiry-name">Name <span class="required">*</span></label><input id="enquiry-name" name="name" type="text" placeholder="Your full name" required><div class="error-text" data-error-for="name"></div></div>
+                <div class="field"><label for="enquiry-email">Email <span class="required">*</span></label><input id="enquiry-email" name="email" type="email" placeholder="your@email.com" required><div class="error-text" data-error-for="email"></div></div>
+                <div class="field"><label for="enquiry-phone">Mobile number <span class="required">*</span></label><input id="enquiry-phone" name="phone" type="tel" inputmode="tel" placeholder="+91 XXXXX XXXXX" required><div class="error-text" data-error-for="phone"></div></div>
+                <div class="field"><label for="enquiry-service">Service needed <span class="required">*</span></label><div class="select-control"><select id="enquiry-service" name="service" required><option value="" disabled selected>Select services</option><option>Security Services</option><option>Housekeeping Services</option><option>Maintenance Services</option><option>Office Support Services</option><option>Sanitization &amp; Pest Control Services</option></select></div><div class="error-text" data-error-for="service"></div></div>
+                <div class="field"><label for="enquiry-message">Message</label><textarea id="enquiry-message" name="message" rows="4" placeholder="Tell us about your requirement..."></textarea></div>
+                <button class="unified-form__submit" type="submit">Send enquiry</button>
+                <p class="unified-form__feedback" data-form-feedback aria-live="polite"></p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </section>
