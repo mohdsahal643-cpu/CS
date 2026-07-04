@@ -327,6 +327,7 @@ function headerTemplate() {
               <a href="/services/maintenance.html">Maintenance Services</a>
               <a href="/services/office-support.html">Office Support Services</a>
               <a href="/services/pest-control.html">Sanitization &amp; Pest Control Services</a>
+              <a href="/services/property-management.html">Property Management Services</a>
             </div>
           </div>
           <a href="/industries.html">Industries</a>
@@ -410,6 +411,8 @@ function setActiveNav() {
 }
 
 function mountLayout() {
+  const desktopNavMinWidth = 900;
+
   document.querySelectorAll("[data-site-header]").forEach((node) => {
     node.innerHTML = headerTemplate();
   });
@@ -442,12 +445,12 @@ function mountLayout() {
   };
 
   desktopServicesTrigger?.addEventListener("click", () => {
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < desktopNavMinWidth) return;
     setDesktopServicesOpen(!desktopServices.classList.contains("is-open"));
   });
 
   mobileServicesToggle?.addEventListener("click", (event) => {
-    if (window.innerWidth >= 768) return;
+    if (window.innerWidth >= desktopNavMinWidth) return;
     event.preventDefault();
     setMobileServicesOpen(!mobileServices.classList.contains("is-open"));
   });
@@ -505,7 +508,7 @@ function mountLayout() {
     });
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= desktopNavMinWidth) {
         if (header.classList.contains("mobile-open")) setMenuOpen(false);
         setMobileServicesOpen(false);
       } else {
