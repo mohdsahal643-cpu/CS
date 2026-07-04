@@ -300,8 +300,8 @@ function headerTemplate() {
           <a href="/contact.html">Contact</a>
         </nav>
         <div class="header-actions">
-          <a class="btn btn-ghost header-whatsapp" href="${siteData.whatsappHref}">WhatsApp</a>
-          <a class="btn btn-quote" href="/contact.html#quote">Get a quote</a>
+          <a class="btn btn-assessment header-assessment" href="/contact.html#assessment">Request an assessment</a>
+          <a class="btn btn-quote header-contact" href="/contact.html#quote">Get in touch</a>
           <button class="mobile-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
             <span></span><span></span><span></span>
           </button>
@@ -410,6 +410,23 @@ function setActiveNav() {
   });
 }
 
+function applyLightSurfaceAlternation() {
+  document.querySelectorAll(".site-shell").forEach((shell) => {
+    let lightIndex = 0;
+
+    Array.from(shell.children).forEach((block) => {
+      if (!block.matches("section, main")) return;
+
+      block.removeAttribute("data-light-surface");
+
+      if (block.matches(".hero, .section-dark")) return;
+
+      lightIndex += 1;
+      block.dataset.lightSurface = lightIndex % 2 === 1 ? "white" : "beige";
+    });
+  });
+}
+
 function mountLayout() {
   const desktopNavMinWidth = 900;
 
@@ -420,6 +437,7 @@ function mountLayout() {
     node.innerHTML = footerTemplate();
   });
   setActiveNav();
+  applyLightSurfaceAlternation();
   const toggle = document.querySelector(".mobile-toggle");
   const header = document.querySelector(".header");
   const menu = document.querySelector(".mobile-menu");
@@ -461,6 +479,9 @@ function mountLayout() {
 
   if (toggle && header && menu) {
     const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const updateHeaderState = () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 16);
+    };
 
     const setMenuOpen = (open) => {
       header.classList.toggle("mobile-open", open);
@@ -481,6 +502,8 @@ function mountLayout() {
 
     toggle.addEventListener("click", () => setMenuOpen(!header.classList.contains("mobile-open")));
     closeTargets.forEach((target) => target.addEventListener("click", () => setMenuOpen(false)));
+    updateHeaderState();
+    window.addEventListener("scroll", updateHeaderState, { passive: true });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && desktopServices?.classList.contains("is-open")) {
@@ -626,6 +649,121 @@ function validateForm(form) {
   return valid;
 }
 
+function initCustomSelects() {
+  const selects = document.querySelectorAll("[data-custom-select]");
+  if (!selects.length) return;
+
+  const closeSelect = (select, restoreFocus = false) => {
+    const trigger = select.querySelector(".custom-select__trigger");
+    const menu = select.querySelector(".custom-select__menu");
+    if (!trigger || !menu) return;
+    select.classList.remove("is-open");
+    trigger.setAttribute("aria-expanded", "false");
+    menu.hidden = true;
+    if (restoreFocus) trigger.focus();
+  };
+
+  const openSelect = (select) => {
+    const trigger = select.querySelector(".custom-select__trigger");
+    const menu = select.querySelector(".custom-select__menu");
+    const selected = select.querySelector('.custom-select__option[aria-selected="true"]');
+    if (!trigger || !menu) return;
+    document.querySelectorAll("[data-custom-select].is-open").forEach((node) => {
+      if (node !== select) closeSelect(node);
+    });
+    select.classList.add("is-open");
+    trigger.setAttribute("aria-expanded", "true");
+    menu.hidden = false;
+    requestAnimationFrame(() => (selected || menu.querySelector(".custom-select__option"))?.focus());
+  };
+
+  const syncSelectValue = (select, value = "") => {
+    const input = select.querySelector('input[name="service"]');
+    const text = select.querySelector(".custom-select__text");
+    const options = Array.from(select.querySelectorAll(".custom-select__option"));
+    if (!input || !text) return;
+
+    input.value = value;
+    select.classList.toggle("has-value", Boolean(value));
+    text.textContent = value || "Select services";
+
+    options.forEach((option) => {
+      const selected = option.dataset.value === value;
+      option.setAttribute("aria-selected", String(selected));
+      option.classList.toggle("is-active", selected);
+    });
+  };
+
+  selects.forEach((select) => {
+    const trigger = select.querySelector(".custom-select__trigger");
+    const menu = select.querySelector(".custom-select__menu");
+    const input = select.querySelector('input[name="service"]');
+    const options = Array.from(select.querySelectorAll(".custom-select__option"));
+    const form = select.closest("form");
+
+    if (!trigger || !menu || !input || !options.length) return;
+
+    syncSelectValue(select, input.value);
+
+    trigger.addEventListener("click", () => {
+      if (select.classList.contains("is-open")) {
+        closeSelect(select);
+      } else {
+        openSelect(select);
+      }
+    });
+
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openSelect(select);
+      }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeSelect(select);
+      }
+    });
+
+    menu.addEventListener("keydown", (event) => {
+      const currentIndex = options.indexOf(document.activeElement);
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeSelect(select, true);
+        return;
+      }
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        options[(currentIndex + 1 + options.length) % options.length].focus();
+      }
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        options[(currentIndex - 1 + options.length) % options.length].focus();
+      }
+      if (event.key === "Tab") {
+        closeSelect(select);
+      }
+    });
+
+    options.forEach((option) => {
+      option.setAttribute("aria-selected", "false");
+      option.addEventListener("click", () => {
+        syncSelectValue(select, option.dataset.value || "");
+        closeSelect(select);
+      });
+    });
+
+    form?.addEventListener("reset", () => {
+      requestAnimationFrame(() => syncSelectValue(select, ""));
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    selects.forEach((select) => {
+      if (!select.contains(event.target)) closeSelect(select);
+    });
+  });
+}
+
 function attachForms() {
   document.querySelectorAll("[data-form]").forEach((form) => {
     form.addEventListener("submit", (event) => {
@@ -672,6 +810,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTechCards();
   renderServicePage();
   renderContactDetails();
+  initCustomSelects();
   attachForms();
   initIndustryShowcase();
 });

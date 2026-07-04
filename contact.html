@@ -100,7 +100,24 @@
                 <div class="field"><label for="enquiry-name">Name <span class="required">*</span></label><input id="enquiry-name" name="name" type="text" placeholder="Your full name" required><div class="error-text" data-error-for="name"></div></div>
                 <div class="field"><label for="enquiry-email">Email <span class="required">*</span></label><input id="enquiry-email" name="email" type="email" placeholder="your@email.com" required><div class="error-text" data-error-for="email"></div></div>
                 <div class="field"><label for="enquiry-phone">Mobile number <span class="required">*</span></label><input id="enquiry-phone" name="phone" type="tel" inputmode="tel" placeholder="+91 XXXXX XXXXX" required><div class="error-text" data-error-for="phone"></div></div>
-                <div class="field"><label for="enquiry-service">Service needed <span class="required">*</span></label><div class="select-control"><select id="enquiry-service" name="service" required><option value="" disabled selected>Select services</option><option>Security Services</option><option>Housekeeping Services</option><option>Maintenance Services</option><option>Office Support Services</option><option>Sanitization &amp; Pest Control Services</option></select></div><div class="error-text" data-error-for="service"></div></div>
+                <div class="field">
+                  <label id="enquiry-service-label" for="enquiry-service-value">Service needed <span class="required">*</span></label>
+                  <div class="select-control custom-select" data-custom-select>
+                    <input id="enquiry-service-value" name="service" type="hidden" required>
+                    <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-controls="enquiry-service-menu" aria-expanded="false" aria-labelledby="enquiry-service-label enquiry-service-text">
+                      <span id="enquiry-service-text" class="custom-select__text">Select services</span>
+                      <svg class="custom-select__chevron" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5"></path></svg>
+                    </button>
+                    <div class="custom-select__menu" id="enquiry-service-menu" role="listbox" tabindex="-1" hidden>
+                      <button class="custom-select__option" type="button" role="option" data-value="Security Services">Security Services</button>
+                      <button class="custom-select__option" type="button" role="option" data-value="Housekeeping Services">Housekeeping Services</button>
+                      <button class="custom-select__option" type="button" role="option" data-value="Maintenance Services">Maintenance Services</button>
+                      <button class="custom-select__option" type="button" role="option" data-value="Office Support Services">Office Support Services</button>
+                      <button class="custom-select__option" type="button" role="option" data-value="Sanitization &amp; Pest Control Services">Sanitization &amp; Pest Control Services</button>
+                    </div>
+                  </div>
+                  <div class="error-text" data-error-for="service"></div>
+                </div>
                 <div class="field"><label for="enquiry-message">Message</label><textarea id="enquiry-message" name="message" rows="4" placeholder="Tell us about your requirement..."></textarea></div>
                 <button class="unified-form__submit" type="submit">Send enquiry</button>
                 <p class="unified-form__feedback" data-form-feedback aria-live="polite"></p>
