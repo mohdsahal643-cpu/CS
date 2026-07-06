@@ -1,10 +1,3 @@
-const commonServiceFeatures = [
-  { icon: "clipboardCheck", title: "Documented SOPs", description: "Operating routines built for review, continuity, and handover." },
-  { icon: "desktopAnalytics", title: "Digital reporting", description: "Structured visibility into incidents, attendance, and escalation." },
-  { icon: "usersGroup", title: "Verified workforce", description: "Background checks, onboarding, and role-specific training." },
-  { icon: "clock24", title: "Response readiness", description: "Supervision and escalation designed for critical environments." },
-];
-
 const siteData = {
   phone: "+91 87797 11055",
   phoneHref: "tel:+918779711055",
@@ -22,7 +15,7 @@ const siteData = {
     housekeepingHero: { src: "/assets/images/image-09.png", title: "Housekeeping corridor", usage: "Housekeeping service page hero", ratio: "16 / 9" },
     cctv: { src: "/assets/images/image-08.png", title: "CCTV control room", usage: "Security hero and tech section", ratio: "4 / 3" },
     maintenance: { src: "/assets/images/image-07.png", title: "Maintenance technician with checklist", usage: "Maintenance service page hero", ratio: "4 / 3" },
-    pestControl: { src: "/assets/images/image-06.png", title: "Pest control PPE in kitchen", usage: "Pest Control service page hero", ratio: "4 / 3" },
+    pestControl: { src: "/assets/images/image-06.png", title: "Pest control PPE in kitchen", usage: "Pest Control & Sanitization service page hero", ratio: "4 / 3" },
     property: { src: "/assets/images/image-05.png", title: "Property manager site walkthrough", usage: "Property Management hero", ratio: "4 / 3" },
     workforce: { src: "/assets/images/image-04.png", title: "Uniformed staff lineup", usage: "About workforce section", ratio: "4 / 3" },
     compliance: { src: "/assets/images/image-03.png", title: "Compliance audit desk flat-lay", usage: "About certifications and trust strip", ratio: "3 / 2" },
@@ -47,16 +40,22 @@ const siteData = {
   ],
   services: {
     security: {
-      title: "Professional security services in Mumbai",
+      title: "Security Services",
       eyebrow: "Security services",
       metaTitle: "Security Services Mumbai - Trained Guards & Patrol | Complete Solutions",
-      description: "Complete Solutions delivers high-reliability security solutions for environments where safety, compliance, and operational continuity are critical.",
+      description: "High-reliability security solutions that protect people, assets, and business operations across corporate, industrial, healthcare, and residential environments.",
+      credibilityHeading: "Built around risk, compliance, and continuity.",
       image: "cctv",
       intro: [
         "With over 30 years of experience, we have evolved from a conventional manpower provider into a compliance-driven security partner for hospitals, corporate offices, manufacturing facilities, banks, and residential communities.",
         "Our accountability, visibility, and response readiness are supported by QR/GPS patrol monitoring, digital incident reporting, VMS integration, and structured escalation logs. [PLACEHOLDER: Add technology platform/software details]",
       ],
-      features: commonServiceFeatures,
+      features: [
+        { icon: "clipboardCheck", title: "Documented SOPs", description: "Security procedures for consistent site operations." },
+        { icon: "desktopAnalytics", title: "Digital reporting", description: "Patrol logs, incidents, and attendance records." },
+        { icon: "usersGroup", title: "Verified workforce", description: "Screened personnel with role-based training." },
+        { icon: "clock24", title: "Response readiness", description: "Supervision and rapid escalation support." },
+      ],
       subServices: [
         { title: "Guarding services", description: "Trained personnel for corporate offices, hospitals, residential communities, industrial facilities, banks, and retail spaces." },
         { title: "Industrial security", description: "Perimeter, material movement, and asset protection for manufacturing, warehouse, and logistics environments." },
@@ -77,26 +76,32 @@ const siteData = {
       assessmentLabel: "Request a security assessment",
     },
     housekeeping: {
-      title: "Professional housekeeping services in Mumbai",
+      title: "Housekeeping Services",
       eyebrow: "Housekeeping services",
       metaTitle: "Commercial Housekeeping Services Mumbai | Complete Solutions",
-      description: "Complete Solutions delivers professional housekeeping services for environments where hygiene standards, safety, and compliance readiness must hold every day.",
+      description: "Creating cleaner, healthier, and better-managed workplaces through integrated housekeeping solutions for every facility.",
+      credibilityHeading: "Built around hygiene, consistency, and presentation.",
       image: "housekeepingHero",
       intro: [
         "Our teams are trained to manage corporate, industrial, healthcare, commercial, and residential environments using structured inspection systems and SOP-driven hygiene management.",
       ],
-      features: commonServiceFeatures,
+      features: [
+        { icon: "clipboardCheck", title: "Cleaning protocols", description: "Standardised procedures for every facility." },
+        { icon: "desktopAnalytics", title: "Digital reporting", description: "Task completion and attendance records." },
+        { icon: "usersGroup", title: "Trained workforce", description: "Skilled personnel for daily operations." },
+        { icon: "clock24", title: "Quality inspections", description: "Routine audits to maintain standards." },
+      ],
       subServices: [
-        "Corporate and commercial housekeeping",
-        "Industrial housekeeping",
-        "Healthcare housekeeping",
-        "Deep cleaning services",
-        "Facade and glass cleaning",
-        "Pantry and washroom upkeep",
-        "Waste handling coordination",
-        "Floor care and machine cleaning",
-        "Move-in and post-project cleaning",
-      ].map((title) => ({ title, description: "Structured housekeeping delivery with supervised quality checks and documented routines." })),
+        { title: "Corporate & Commercial Housekeeping", description: "Professional services for offices, commercial spaces, and business environments." },
+        { title: "Industrial Housekeeping", description: "Efficient cleaning ensuring industrial hygiene, safety, and operational cleanliness." },
+        { title: "Deep Cleaning Services", description: "Intensive cleaning restoring hygiene across high-use and sensitive areas." },
+        { title: "Facade Cleaning", description: "Exterior cleaning that enhances building appearance and long-term maintenance." },
+        { title: "Floor Treatment & Crystallization", description: "Advanced floor care improving durability, shine, and surface protection." },
+        { title: "Carpet & Upholstery Shampooing", description: "Deep cleaning for carpets, upholstery, and fabric furnishings." },
+        { title: "Tank Cleaning", description: "Professional water tank cleaning ensuring hygiene and safe storage." },
+        { title: "Home Care Services", description: "Reliable residential housekeeping for clean, comfortable living spaces." },
+        { title: "Silicon Filling", description: "Precision sealing solutions for durable, neat, and professional finishes." },
+      ],
       bullets: [
         "Professionally managed teams",
         "SOP-driven quality control",
@@ -108,23 +113,29 @@ const siteData = {
       assessmentLabel: "Request a housekeeping assessment",
     },
     maintenance: {
-      title: "Facility maintenance services in Mumbai",
+      title: "Maintenance Services",
       eyebrow: "Maintenance services",
       metaTitle: "Facility Maintenance Services Mumbai | Complete Solutions",
-      description: "Complete Solutions provides facility maintenance services designed to reduce downtime and keep critical infrastructure functional.",
+      description: "Keeping critical infrastructure operating efficiently with comprehensive maintenance and engineering support services.",
+      credibilityHeading: "Built around reliability, performance, and preventive care.",
       image: "maintenance",
       intro: [
         "Preventive maintenance, rapid response, and structured reporting help clients identify operational risks before they become disruption.",
       ],
-      features: commonServiceFeatures,
+      features: [
+        { icon: "clipboardCheck", title: "Preventive planning", description: "Scheduled servicing to reduce downtime." },
+        { icon: "desktopAnalytics", title: "Digital reporting", description: "Maintenance requests and work updates." },
+        { icon: "usersGroup", title: "Qualified technicians", description: "Experienced teams across key trades." },
+        { icon: "clock24", title: "Rapid response", description: "Prompt support for service requirements." },
+      ],
       subServices: [
-        "Mechanical and electrical maintenance",
-        "Plumbing and carpentry",
-        "Fire and safety systems",
-        "Operation and maintenance",
-        "HVAC maintenance",
-        "Project management support",
-      ].map((title) => ({ title, description: "Planned and responsive maintenance support with clear escalation and reporting." })),
+        { title: "Mechanical & Electrical Maintenance", description: "Reliable maintenance for electrical, mechanical, and critical infrastructure systems." },
+        { title: "Plumbing & Carpentry Services", description: "Expert repairs for plumbing, carpentry, fixtures, and structural maintenance." },
+        { title: "Fire & Safety Systems", description: "Maintenance ensuring reliable fire safety systems and regulatory readiness." },
+        { title: "Operation & Maintenance Services", description: "Integrated facility maintenance improving efficiency and operational reliability." },
+        { title: "HVAC Maintenance Services", description: "Professional HVAC servicing ensuring efficient cooling, ventilation, and air quality." },
+        { title: "Project Management Support", description: "Coordinated project execution ensuring quality, timelines, and operational continuity." },
+      ],
       bullets: [
         "Fast-response support",
         "24/7 operational availability",
@@ -136,23 +147,29 @@ const siteData = {
       assessmentLabel: "Request a maintenance system assessment",
     },
     "office-support": {
-      title: "Office support services in Mumbai",
+      title: "Office Support Services",
       eyebrow: "Office support services",
       metaTitle: "Office Support & Staffing Services Mumbai | Complete Solutions",
-      description: "Complete Solutions delivers professionally managed office support services for organisations that require operational efficiency and workforce reliability.",
+      description: "Enhancing workplace productivity through dependable office support, administration, and operational assistance services.",
+      credibilityHeading: "Built around efficiency, responsiveness, and professionalism.",
       image: "workforce",
       intro: [
         "Our support teams function as an extension of the client\u2019s operational framework, backed by supervision, reporting protocols, and role-specific readiness.",
       ],
-      features: commonServiceFeatures,
+      features: [
+        { icon: "clipboardCheck", title: "Defined workflows", description: "Structured processes for daily operations." },
+        { icon: "desktopAnalytics", title: "Digital reporting", description: "Task updates and operational records." },
+        { icon: "usersGroup", title: "Professional teams", description: "Trained personnel for support functions." },
+        { icon: "clock24", title: "Service continuity", description: "Supervised operations every working day." },
+      ],
       subServices: [
-        "Reception and front office",
-        "Transportation management",
-        "Back office support",
-        "Helpdesk services",
-        "Mailroom and document management",
-        "Payroll management support",
-      ].map((title) => ({ title, description: "Professionally supervised workplace support for consistent daily operations." })),
+        { title: "Reception & Front Office Management", description: "Reception services delivering seamless visitor and communication management." },
+        { title: "Transportation Management", description: "Transport coordination supporting employee mobility and scheduling." },
+        { title: "Back Office Support", description: "Administrative support for documentation, workflows, and data management." },
+        { title: "Helpdesk Services", description: "Helpdesk solutions for efficient issue tracking and support." },
+        { title: "Mailroom & Document Management", description: "Organized mail handling, document management, and dispatch coordination." },
+        { title: "Payroll Management Support", description: "Payroll administration supporting employee records and attendance management." },
+      ],
       bullets: [
         "Workplace-ready personnel",
         "Scalable deployment",
@@ -163,23 +180,29 @@ const siteData = {
       closing: "Complete Solutions: office support services for organisations where operational efficiency matters every day.",
       assessmentLabel: "Get an operational support assessment",
     },
-    "pest-control": {
-      title: "Pest control services in Mumbai",
+    "pest-control-sanitization": {
+      title: "Pest Control & Sanitization",
       eyebrow: "Pest control and sanitization",
-      metaTitle: "Pest Control Services Mumbai | Complete Solutions",
-      description: "Complete Solutions provides pest control and sanitization services for environments where hygiene, infection prevention, and operational safety are essential.",
+      metaTitle: "Pest Control & Sanitization Services Mumbai | Complete Solutions",
+      description: "Protecting people and workplaces with integrated pest management and sanitization solutions for every environment.",
+      credibilityHeading: "Built around prevention, hygiene, and safety.",
       image: "pestControl",
       intro: [
         "Our teams use protocol-led implementation, supervised deployment, and structured hygiene reporting for residential, commercial, healthcare, and industrial facilities.",
       ],
-      features: commonServiceFeatures,
+      features: [
+        { icon: "clipboardCheck", title: "Treatment protocols", description: "Planned solutions for every facility." },
+        { icon: "desktopAnalytics", title: "Digital reporting", description: "Service records and inspection updates." },
+        { icon: "usersGroup", title: "Certified technicians", description: "Trained professionals for every treatment." },
+        { icon: "clock24", title: "Follow-up monitoring", description: "Scheduled inspections and preventive support." },
+      ],
       subServices: [
-        "Residential sanitization",
-        "Corporate and office disinfection",
-        "Industrial and commercial sanitization",
-        "Infectious disease response sanitization",
-        "Pest control services",
-      ].map((title) => ({ title, description: "Controlled hygiene and pest prevention support for sensitive environments." })),
+        { title: "Residential Sanitization Services", description: "Home sanitization promoting healthier and safer living environments." },
+        { title: "Corporate & Office Disinfection", description: "Workplace disinfection supporting hygiene and uninterrupted business operations." },
+        { title: "Industrial & Commercial Sanitization", description: "Advanced sanitization for industrial, commercial, and institutional facilities." },
+        { title: "Infectious Disease Response Sanitization", description: "Specialized disinfection ensuring safe reoccupation after infectious disease exposure." },
+        { title: "Pest Control & Sanitization Services", description: "Effective pest management and sanitization support for hygienic environments." },
+      ],
       bullets: [
         "Pandemic-response experience",
         "Approved disinfection practices",
@@ -187,27 +210,33 @@ const siteData = {
         "Scalable services",
         "Responsive support",
       ],
-      closing: "Complete Solutions: hygiene and pest control services built for environments where safety cannot be compromised.",
+      closing: "Complete Solutions: hygiene, pest control, and sanitization services built for environments where safety cannot be compromised.",
       assessmentLabel: "Request a sanitization assessment",
     },
     "property-management": {
-      title: "Property management services Mumbai",
+      title: "Property Management",
       eyebrow: "Property management",
       metaTitle: "Property Management Services Mumbai | Complete Solutions",
-      description: "Complete Solutions delivers end-to-end property management services that protect, maintain, and enhance residential and commercial assets.",
+      description: "Maximising property value through structured maintenance, tenant management, and operational oversight services.",
+      credibilityHeading: "Built around preservation, accountability, and long-term value.",
       image: "property",
       intro: [
         "Inspection systems, tenant coordination, compliance documentation, and repair management help owners reduce operational friction and protect long-term value.",
       ],
-      features: commonServiceFeatures,
+      features: [
+        { icon: "clipboardCheck", title: "Inspection schedules", description: "Routine reviews of property condition." },
+        { icon: "desktopAnalytics", title: "Digital records", description: "Maintenance and tenancy documentation." },
+        { icon: "usersGroup", title: "Dedicated managers", description: "Single-point coordination for properties." },
+        { icon: "clock24", title: "Proactive oversight", description: "Timely action on maintenance issues." },
+      ],
       subServices: [
-        "Property maintenance and repair",
-        "Rent collection and lease management",
-        "Regular property inspections",
-        "Tenant screening and management",
-        "Legal compliance documentation",
-        "Vacant property care and security",
-      ].map((title) => ({ title, description: "Coordinated property operations with documented checks and owner visibility." })),
+        { title: "Property Maintenance & Repair Management", description: "Comprehensive service preserving functionality, safety, and long-term value." },
+        { title: "Rent Collection & Lease Management", description: "Efficient lease administration and streamlined rent collection processes." },
+        { title: "Regular Property Inspections", description: "Routine inspections identifying maintenance issues before escalation." },
+        { title: "Tenant Screening & Management", description: "Tenant coordination supporting occupancy and issue resolution." },
+        { title: "Legal Compliance & Documentation Support", description: "Compliance support maintaining accurate records and documentation." },
+        { title: "Vacant Property Care & Security", description: "Maintenance securing vacant properties against damage and neglect." },
+      ],
       bullets: [
         "Managed property operations",
         "Reliable maintenance coordination",
@@ -220,7 +249,7 @@ const siteData = {
     },
   },
   industries: [
-    { slug: "it-parks", title: "IT parks and corporate offices", text: "Workplace experience depends on invisible operational continuity.", image: "itPark" },
+    { slug: "it-parks", title: "IT parks and corporate offices", text: "Workplaces where experience depends on invisible operational continuity.", image: "itPark" },
     { slug: "manufacturing", title: "Manufacturing and industrial", text: "Security and maintenance systems for facilities where downtime has a price tag.", image: "manufacturing" },
     { slug: "banking", title: "Banking and financial services", text: "High-trust environments where every security protocol is non-negotiable.", image: "banking" },
     { slug: "residential", title: "Residential and housing societies", text: "Community safety and consistency delivered every morning and every night.", image: "residential" },
@@ -272,7 +301,7 @@ function headerTemplate() {
     ["Housekeeping", "/services/housekeeping.html"],
     ["Maintenance", "/services/maintenance.html"],
     ["Office Support", "/services/office-support.html"],
-    ["Pest Control", "/services/pest-control.html"],
+    ["Pest Control & Sanitization", "/services/pest-control-sanitization.html"],
     ["Property Management", "/services/property-management.html"],
   ];
 
@@ -326,7 +355,7 @@ function headerTemplate() {
               <a href="/services/housekeeping.html">Housekeeping Services</a>
               <a href="/services/maintenance.html">Maintenance Services</a>
               <a href="/services/office-support.html">Office Support Services</a>
-              <a href="/services/pest-control.html">Sanitization &amp; Pest Control Services</a>
+              <a href="/services/pest-control-sanitization.html">Pest Control &amp; Sanitization Services</a>
               <a href="/services/property-management.html">Property Management Services</a>
             </div>
           </div>
@@ -363,7 +392,7 @@ function footerTemplate() {
             <a href="/services/housekeeping.html">Housekeeping</a>
             <a href="/services/maintenance.html">Maintenance</a>
             <a href="/services/office-support.html">Office Support</a>
-            <a href="/services/pest-control.html">Pest Control</a>
+            <a href="/services/pest-control-sanitization.html">Pest Control &amp; Sanitization</a>
             <a href="/services/property-management.html">Property Management</a>
           </div>
         </div>
@@ -575,6 +604,7 @@ function renderServicePage() {
   const closing = document.querySelector("[data-service-closing]");
   const assessment = document.querySelectorAll("[data-assessment-label]");
   const asset = document.querySelector("[data-service-asset]");
+  const credibilityHeading = document.querySelector(".service-credibility-section .section-title");
 
   if (hero) {
     hero.innerHTML = `
@@ -594,7 +624,8 @@ function renderServicePage() {
     `;
   }
 
-  if (intro) intro.innerHTML = [service.description, ...service.intro].map((item) => `<p>${item}</p>`).join("");
+  if (credibilityHeading && service.credibilityHeading) credibilityHeading.textContent = service.credibilityHeading;
+  if (intro) intro.innerHTML = service.intro.map((item) => `<p>${item}</p>`).join("");
   if (features) features.innerHTML = service.features.map((item) => `
     <article class="service-feature-card">
       <div class="service-feature-card__icon">${iconSet[item.icon] || ""}</div>

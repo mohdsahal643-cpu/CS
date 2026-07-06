@@ -431,6 +431,22 @@ textarea {
   line-height: 1.1;
 }
 
+body[data-service] .hero-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 1rem;
+}
+
+body[data-service] .hero-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 4.5rem;
+  height: 2px;
+  background: var(--gold);
+}
+
 .hero-text {
   max-width: 42rem;
   margin-top: 1.5rem;
