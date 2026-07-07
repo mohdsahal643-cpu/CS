@@ -42,7 +42,7 @@ const siteData = {
     security: {
       title: "Security Services",
       eyebrow: "Security services",
-      metaTitle: "Security Services Mumbai - Trained Guards & Patrol | Complete Solutions",
+      metaTitle: "Security Services India - Trained Guards & Patrol | Complete Solutions",
       description: "High-reliability security solutions that protect people, assets, and business operations across corporate, industrial, healthcare, and residential environments.",
       credibilityHeading: "Built around risk, compliance, and continuity.",
       image: "cctv",
@@ -78,7 +78,7 @@ const siteData = {
     housekeeping: {
       title: "Housekeeping Services",
       eyebrow: "Housekeeping services",
-      metaTitle: "Commercial Housekeeping Services Mumbai | Complete Solutions",
+      metaTitle: "Commercial Housekeeping Services India | Complete Solutions",
       description: "Creating cleaner, healthier, and better-managed workplaces through integrated housekeeping solutions for every facility.",
       credibilityHeading: "Built around hygiene, consistency, and presentation.",
       image: "housekeepingHero",
@@ -115,7 +115,7 @@ const siteData = {
     maintenance: {
       title: "Maintenance Services",
       eyebrow: "Maintenance services",
-      metaTitle: "Facility Maintenance Services Mumbai | Complete Solutions",
+      metaTitle: "Facility Maintenance Services India | Complete Solutions",
       description: "Keeping critical infrastructure operating efficiently with comprehensive maintenance and engineering support services.",
       credibilityHeading: "Built around reliability, performance, and preventive care.",
       image: "maintenance",
@@ -149,7 +149,7 @@ const siteData = {
     "office-support": {
       title: "Office Support Services",
       eyebrow: "Office support services",
-      metaTitle: "Office Support & Staffing Services Mumbai | Complete Solutions",
+      metaTitle: "Office Support & Staffing Services India | Complete Solutions",
       description: "Enhancing workplace productivity through dependable office support, administration, and operational assistance services.",
       credibilityHeading: "Built around efficiency, responsiveness, and professionalism.",
       image: "workforce",
@@ -183,7 +183,7 @@ const siteData = {
     "pest-control-sanitization": {
       title: "Pest Control & Sanitization",
       eyebrow: "Pest control and sanitization",
-      metaTitle: "Pest Control & Sanitization Services Mumbai | Complete Solutions",
+      metaTitle: "Pest Control & Sanitization Services India | Complete Solutions",
       description: "Protecting people and workplaces with integrated pest management and sanitization solutions for every environment.",
       credibilityHeading: "Built around prevention, hygiene, and safety.",
       image: "pestControl",
@@ -216,7 +216,7 @@ const siteData = {
     "property-management": {
       title: "Property Management",
       eyebrow: "Property management",
-      metaTitle: "Property Management Services Mumbai | Complete Solutions",
+      metaTitle: "Property Management Services India | Complete Solutions",
       description: "Maximising property value through structured maintenance, tenant management, and operational oversight services.",
       credibilityHeading: "Built around preservation, accountability, and long-term value.",
       image: "property",
