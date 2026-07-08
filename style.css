@@ -2163,6 +2163,11 @@ a.about-certification-card:focus-visible {
   font-weight: 600;
 }
 
+.unified-enquiry-form .field label .optional {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
 .unified-enquiry-form .required {
   color: #d8a949;
 }

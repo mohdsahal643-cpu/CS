@@ -672,12 +672,104 @@ function validateForm(form) {
     valid = false;
   }
   const email = form.querySelector('input[name="email"]');
-  if (email && email.value && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value.trim())) {
+  if (email && email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
     const error = form.querySelector('[data-error-for="email"]');
     if (error) error.textContent = "Enter a valid email address.";
     valid = false;
   }
   return valid;
+}
+
+const FORM_RATE_LIMIT_KEY = "cs_form_submission_times_v1";
+const FORM_RATE_LIMIT_MAX = 3;
+const FORM_RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
+const CONTACT_FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbySxH8PvXWZF9hl6MBp49UJ2-LIr4RZg65GzsXLQsGFVPIam-TcQO2J4S86Ij94xN-R/exec";
+const CONTACT_FORM_IFRAME_NAME = "contact-form-submit-frame";
+
+function getFormRateLimitState() {
+  try {
+    const raw = window.localStorage.getItem(FORM_RATE_LIMIT_KEY);
+    const now = Date.now();
+    const recent = raw ? JSON.parse(raw).filter((time) => now - Number(time) < FORM_RATE_LIMIT_WINDOW_MS) : [];
+    return { recent, now };
+  } catch (_error) {
+    return { recent: [], now: Date.now() };
+  }
+}
+
+function canSubmitFormNow() {
+  const { recent, now } = getFormRateLimitState();
+  if (recent.length < FORM_RATE_LIMIT_MAX) return { allowed: true, retryAfterMs: 0 };
+  const retryAfterMs = FORM_RATE_LIMIT_WINDOW_MS - (now - recent[0]);
+  return { allowed: retryAfterMs <= 0, retryAfterMs: Math.max(retryAfterMs, 0) };
+}
+
+function recordFormSubmission() {
+  try {
+    const { recent, now } = getFormRateLimitState();
+    recent.push(now);
+    window.localStorage.setItem(FORM_RATE_LIMIT_KEY, JSON.stringify(recent));
+  } catch (_error) {
+    // Ignore storage failures and fail open.
+  }
+}
+
+function formatRetryWindow(ms) {
+  const totalMinutes = Math.max(1, Math.ceil(ms / 60000));
+  return totalMinutes === 1 ? "1 minute" : `${totalMinutes} minutes`;
+}
+
+async function submitContactEnquiry(form) {
+  return new Promise((resolve, reject) => {
+    let iframe = document.getElementById(CONTACT_FORM_IFRAME_NAME);
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.id = CONTACT_FORM_IFRAME_NAME;
+      iframe.name = CONTACT_FORM_IFRAME_NAME;
+      iframe.hidden = true;
+      iframe.tabIndex = -1;
+      iframe.setAttribute("aria-hidden", "true");
+      iframe.src = "about:blank";
+      document.body.appendChild(iframe);
+    }
+
+    const originalAction = form.getAttribute("action");
+    const originalMethod = form.getAttribute("method");
+    const originalTarget = form.getAttribute("target");
+    const originalNoValidate = form.noValidate;
+
+    let settled = false;
+    const timeoutId = window.setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      reject(new Error("The submission timed out. Please try again."));
+    }, 15000);
+
+    const handleLoad = () => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolve({ ok: true });
+    };
+
+    const cleanup = () => {
+      window.clearTimeout(timeoutId);
+      iframe.removeEventListener("load", handleLoad);
+      if (originalAction === null) form.removeAttribute("action"); else form.setAttribute("action", originalAction);
+      if (originalMethod === null) form.removeAttribute("method"); else form.setAttribute("method", originalMethod);
+      if (originalTarget === null) form.removeAttribute("target"); else form.setAttribute("target", originalTarget);
+      form.noValidate = originalNoValidate;
+    };
+
+    iframe.addEventListener("load", handleLoad, { once: true });
+
+    form.setAttribute("action", CONTACT_FORM_ENDPOINT);
+    form.setAttribute("method", "POST");
+    form.setAttribute("target", CONTACT_FORM_IFRAME_NAME);
+    form.noValidate = true;
+    form.submit();
+  });
 }
 
 function initCustomSelects() {
@@ -797,7 +889,11 @@ function initCustomSelects() {
 
 function attachForms() {
   document.querySelectorAll("[data-form]").forEach((form) => {
-    form.addEventListener("submit", (event) => {
+    const pageUrl = form.querySelector('input[name="page_url"]');
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (pageUrl) pageUrl.value = window.location.href;
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const feedback = form.querySelector("[data-form-feedback]");
       if (!validateForm(form)) {
@@ -808,12 +904,51 @@ function attachForms() {
         }
         return;
       }
-      if (feedback) {
-        feedback.classList.remove("error-text");
-        feedback.classList.add("success-text");
-        feedback.textContent = "Thank you. Your request has been recorded. Our team will contact you shortly.";
+      const rateLimit = canSubmitFormNow();
+      if (!rateLimit.allowed) {
+        if (feedback) {
+          feedback.classList.remove("success-text");
+          feedback.classList.add("error-text");
+          feedback.textContent = `Too many submissions from this browser. Please wait ${formatRetryWindow(rateLimit.retryAfterMs)} before trying again.`;
+        }
+        return;
       }
-      form.reset();
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.dataset.originalText = submitButton.textContent || "Send enquiry";
+        submitButton.textContent = "Sending...";
+      }
+
+      if (feedback) {
+        feedback.classList.remove("error-text", "success-text");
+        feedback.textContent = "";
+      }
+
+      try {
+        await submitContactEnquiry(form);
+        recordFormSubmission();
+        if (feedback) {
+          feedback.classList.remove("error-text");
+          feedback.classList.add("success-text");
+          feedback.textContent = "Thank you. Your enquiry has been submitted. Our team will contact you shortly.";
+        }
+        form.reset();
+        requestAnimationFrame(() => {
+          if (pageUrl) pageUrl.value = window.location.href;
+        });
+      } catch (error) {
+        if (feedback) {
+          feedback.classList.remove("success-text");
+          feedback.classList.add("error-text");
+          feedback.textContent = error instanceof Error ? error.message : "We could not submit your enquiry right now. Please try again.";
+        }
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = submitButton.dataset.originalText || "Send enquiry";
+        }
+      }
     });
   });
 }
