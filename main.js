@@ -11,18 +11,18 @@ const siteData = {
   nabh: "[PLACEHOLDER: NABH training reference]",
   coordinates: { lat: "19.0753", lng: "72.8552" },
   assets: {
-    homepageHero: { src: "/assets/images/image-10.png", title: "Security guard night patrol", usage: "Homepage hero background", ratio: "16 / 9" },
-    housekeepingHero: { src: "/assets/images/image-09.png", title: "Housekeeping corridor", usage: "Housekeeping service page hero", ratio: "16 / 9" },
-    cctv: { src: "/assets/images/image-08.png", title: "CCTV control room", usage: "Security hero and tech section", ratio: "4 / 3" },
-    maintenance: { src: "/assets/images/image-07.png", title: "Maintenance technician with checklist", usage: "Maintenance service page hero", ratio: "4 / 3" },
-    pestControl: { src: "/assets/images/image-06.png", title: "Pest control PPE in kitchen", usage: "Pest Control & Sanitization service page hero", ratio: "4 / 3" },
-    property: { src: "/assets/images/image-05.png", title: "Property manager site walkthrough", usage: "Property Management hero", ratio: "4 / 3" },
-    workforce: { src: "/assets/images/image-04.png", title: "Uniformed staff lineup", usage: "About workforce section", ratio: "4 / 3" },
-    compliance: { src: "/assets/images/image-03.png", title: "Compliance audit desk flat-lay", usage: "About certifications and trust strip", ratio: "3 / 2" },
-    itPark: { src: "/assets/images/image-02.png", title: "IT technology park campus", usage: "Industries IT Parks card", ratio: "16 / 9" },
-    manufacturing: { src: "/assets/images/image-01.png", title: "Industrial manufacturing floor", usage: "Industries Manufacturing card", ratio: "16 / 9" },
-    banking: { src: "/assets/images/image-11.png", title: "Bank branch entrance with security guard", usage: "Industries Banking card", ratio: "16 / 9" },
-    residential: { src: "/assets/images/image-12.png", title: "Residential society gate", usage: "Industries Residential card", ratio: "16 / 9" },
+    homepageHero: { src: "/assets/images/image-10.webp", title: "Security guard night patrol", usage: "Homepage hero background", ratio: "16 / 9" },
+    housekeepingHero: { src: "/assets/images/image-09.webp", title: "Housekeeping corridor", usage: "Housekeeping service page hero", ratio: "16 / 9" },
+    cctv: { src: "/assets/images/image-08.webp", title: "CCTV control room", usage: "Security hero and tech section", ratio: "4 / 3" },
+    maintenance: { src: "/assets/images/image-07.webp", title: "Maintenance technician with checklist", usage: "Maintenance service page hero", ratio: "4 / 3" },
+    pestControl: { src: "/assets/images/image-06.webp", title: "Pest control PPE in kitchen", usage: "Pest Control & Sanitization service page hero", ratio: "4 / 3" },
+    property: { src: "/assets/images/image-05.webp", title: "Property manager site walkthrough", usage: "Property Management hero", ratio: "4 / 3" },
+    workforce: { src: "/assets/images/image-04.webp", title: "Uniformed staff lineup", usage: "About workforce section", ratio: "4 / 3" },
+    compliance: { src: "/assets/images/image-03.webp", title: "Compliance audit desk flat-lay", usage: "About certifications and trust strip", ratio: "3 / 2" },
+    itPark: { src: "/assets/images/image-02.webp", title: "IT technology park campus", usage: "Industries IT Parks card", ratio: "16 / 9" },
+    manufacturing: { src: "/assets/images/image-01.webp", title: "Industrial manufacturing floor", usage: "Industries Manufacturing card", ratio: "16 / 9" },
+    banking: { src: "/assets/images/image-11.webp", title: "Bank branch entrance with security guard", usage: "Industries Banking card", ratio: "16 / 9" },
+    residential: { src: "/assets/images/image-12.webp", title: "Residential society gate", usage: "Industries Residential card", ratio: "16 / 9" },
   },
   stats: [
     { value: "30+", label: "Years in operation" },
@@ -310,7 +310,7 @@ function headerTemplate() {
       <div class="container header-inner">
         <a class="brand" href="/index.html">
           <span class="brand-mark">
-            <img src="/assets/logo/Logo-2048x1468.png" alt="Complete Solutions logo">
+            <img src="/assets/logo/Logo-2048x1468.webp" alt="Complete Solutions logo">
           </span>
           <span class="brand-name">Complete Solutions</span>
         </a>
@@ -340,7 +340,7 @@ function headerTemplate() {
       <aside class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
         <div class="mobile-menu__top">
           <a class="brand" href="/index.html">
-            <span class="brand-mark"><img src="/assets/logo/Logo-2048x1468.png" alt="Complete Solutions logo"></span>
+            <span class="brand-mark"><img src="/assets/logo/Logo-2048x1468.webp" alt="Complete Solutions logo"></span>
             <span class="brand-name">Complete Solutions</span>
           </a>
         </div>
@@ -377,7 +377,7 @@ function footerTemplate() {
         <div>
           <a class="brand" href="/index.html">
             <span class="brand-mark">
-              <img src="/assets/logo/Logo-2048x1468.png" alt="Complete Solutions logo">
+              <img src="/assets/logo/Logo-2048x1468.webp" alt="Complete Solutions logo">
             </span>
             <span class="brand-name">Complete Solutions</span>
           </a>
@@ -916,6 +916,7 @@ function attachForms() {
 
       if (submitButton) {
         submitButton.disabled = true;
+        submitButton.classList.add("is-loading");
         submitButton.dataset.originalText = submitButton.textContent || "Send enquiry";
         submitButton.textContent = "Sending...";
       }
@@ -946,6 +947,7 @@ function attachForms() {
       } finally {
         if (submitButton) {
           submitButton.disabled = false;
+          submitButton.classList.remove("is-loading");
           submitButton.textContent = submitButton.dataset.originalText || "Send enquiry";
         }
       }
