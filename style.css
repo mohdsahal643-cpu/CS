@@ -996,6 +996,23 @@ body[data-service] .hero-title::after {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1.25rem;
+  align-items: stretch;
+}
+
+.about-stats .stat-card .value {
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.about-stats__card--metric {
+  padding-inline: 1.35rem;
+}
+
+.about-stats__card--metric .value {
+  white-space: nowrap;
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
 }
 
 .about-stats .stat-card--placeholder .value,
@@ -1172,7 +1189,28 @@ a.about-certification-card:focus-visible {
   line-height: 1.5;
 }
 
+.about-commitment {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-commitment::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(216, 169, 73, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(216, 169, 73, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.95;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.52) 45%, rgba(0, 0, 0, 0.22) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.52) 45%, rgba(0, 0, 0, 0.22) 100%);
+}
+
 .about-commitment__inner {
+  position: relative;
+  z-index: 1;
   max-width: 58rem;
   text-align: center;
 }
@@ -2782,6 +2820,10 @@ a.about-certification-card:focus-visible {
 
   .about-stats .stat-card {
     padding-left: 0.75rem;
+  }
+
+  .about-stats__card--metric {
+    padding-inline: 1rem;
   }
 
   .about-certification-card--wide {

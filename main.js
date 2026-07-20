@@ -6,9 +6,9 @@ const siteData = {
   email: "info@completesolutions.co.in",
   emailHref: "mailto:info@completesolutions.co.in",
   address: "Corporate Office Mumbai, 1st Floor, Vinay Bhavya Complex, A-102, 159, CST Road, Kalina, Santacruz East, Mumbai, Maharashtra \u2013 400098",
+  addressHref: "https://maps.app.goo.gl/orrucnLS9FpQJ4qW6",
   psara: "PSA/L/44/MH/2023/AUG/3/3227",
   iso: "2024031235",
-  nabh: "[PLACEHOLDER: NABH training reference]",
   coordinates: { lat: "19.0753", lng: "72.8552" },
   assets: {
     homepageHero: { src: "/assets/images/image-10.webp", title: "Security guard night patrol", usage: "Homepage hero background", ratio: "16 / 9" },
@@ -26,17 +26,17 @@ const siteData = {
   },
   stats: [
     { value: "30+", label: "Years in operation" },
-    { value: "[XX]M+", label: "Sq ft managed daily" },
-    { value: "[XX]%", label: "Client retention rate" },
-    { value: "[XXXX]+", label: "Operational personnel" },
-    { value: "[XX]+", label: "Active client locations" },
+    { value: "557,000+", label: "Sq m managed daily" },
+    { value: "90%", label: "Client retention rate" },
+    { value: "2500+", label: "Operational personnel" },
+    { value: "120+", label: "Active client locations" },
   ],
   tech: [
     { icon: "qrcode", title: "QR/GPS patrol tracking", text: "Structured patrol and attendance visibility." },
     { icon: "building", title: "VMS integration", text: "Visitor movement tied to site protocols." },
     { icon: "clipboard", title: "Digital escalation logs", text: "Incident trails ready for review." },
     { icon: "users", title: "Biometric attendance", text: "Verified workforce presence." },
-    { icon: "dashboard", title: "Client dashboard", text: "[PLACEHOLDER: platform/software details]" },
+    { icon: "dashboard", title: "Client dashboard", text: "Site-wide visibility into attendance, incidents, patrols, and service performance." },
   ],
   services: {
     security: {
@@ -48,7 +48,7 @@ const siteData = {
       image: "cctv",
       intro: [
         "With over 30 years of experience, we have evolved from a conventional manpower provider into a compliance-driven security partner for hospitals, corporate offices, manufacturing facilities, banks, and residential communities.",
-        "Our accountability, visibility, and response readiness are supported by QR/GPS patrol monitoring, digital incident reporting, VMS integration, and structured escalation logs. [PLACEHOLDER: Add technology platform/software details]",
+        "Our accountability, visibility, and response readiness are supported by QR/GPS patrol monitoring, digital incident reporting, VMS integration, and structured escalation logs. These systems improve visibility, reporting, and accountability across every deployment.",
       ],
       features: [
         { icon: "clipboardCheck", title: "Documented SOPs", description: "Security procedures for consistent site operations." },
@@ -410,7 +410,7 @@ function footerTemplate() {
             <a href="${siteData.phoneHref}">Phone: ${siteData.phone}</a>
             <a href="${siteData.whatsappHref}">WhatsApp: ${siteData.whatsapp}</a>
             <a href="${siteData.emailHref}">Email: ${siteData.email}</a>
-            <span>Office: ${siteData.address}</span>
+            <a href="${siteData.addressHref}" target="_blank" rel="noopener noreferrer">Office: ${siteData.address}</a>
           </div>
         </div>
       </div>
@@ -573,10 +573,117 @@ function mountLayout() {
 function renderStats(target) {
   target.innerHTML = siteData.stats.map((stat) => `
     <div class="stat-card">
-      <div class="value">${stat.value}</div>
+      <div class="value" data-countup>${stat.value}</div>
       <div class="label">${stat.label}</div>
     </div>
   `).join("");
+}
+
+const STAT_COUNTER_DURATION_MS = 1100;
+const STAT_COUNTER_STAGGER_MS = 250;
+
+function parseCounterDisplay(text) {
+  const value = String(text || "").trim();
+  const match = value.match(/^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/);
+  if (!match) return null;
+
+  const [, prefix, numericText, suffix] = match;
+  const target = Number(numericText.replace(/,/g, ""));
+  if (!Number.isFinite(target)) return null;
+
+  const decimalMatch = numericText.match(/\.(\d+)$/);
+  return {
+    prefix,
+    suffix,
+    target,
+    decimals: decimalMatch ? decimalMatch[1].length : 0,
+    original: value,
+  };
+}
+
+function formatCounterDisplay(meta, numericValue) {
+  const rounded = meta.decimals ? numericValue.toFixed(meta.decimals) : Math.round(numericValue);
+  const formattedNumber = meta.decimals
+    ? Number(rounded).toLocaleString("en-US", {
+      minimumFractionDigits: meta.decimals,
+      maximumFractionDigits: meta.decimals,
+    })
+    : Number(rounded).toLocaleString("en-US");
+
+  return `${meta.prefix}${formattedNumber}${meta.suffix}`;
+}
+
+function animateCounterValue(node, meta) {
+  return new Promise((resolve) => {
+    const startTime = window.performance.now();
+
+    const tick = (now) => {
+      const progress = Math.min((now - startTime) / STAT_COUNTER_DURATION_MS, 1);
+      const easedProgress = 1 - ((1 - progress) ** 3);
+      node.textContent = formatCounterDisplay(meta, meta.target * easedProgress);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(tick);
+        return;
+      }
+
+      node.textContent = meta.original;
+      resolve();
+    };
+
+    window.requestAnimationFrame(tick);
+  });
+}
+
+function initStatCounters() {
+  const counterNodes = Array.from(document.querySelectorAll("[data-countup]"));
+  if (!counterNodes.length) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  counterNodes.forEach((node) => {
+    const meta = parseCounterDisplay(node.textContent);
+    if (!meta) return;
+    node.dataset.countFinal = meta.original;
+    node.setAttribute("aria-label", meta.original);
+    if (!prefersReducedMotion) {
+      node.textContent = formatCounterDisplay(meta, 0);
+    }
+  });
+
+  if (prefersReducedMotion) return;
+
+  const groups = Array.from(new Set(counterNodes
+    .map((node) => node.closest("[data-counter-group]"))
+    .filter(Boolean)));
+
+  if (!groups.length) return;
+
+  const runCounterGroup = async (group) => {
+    if (group.dataset.countAnimated === "true") return;
+    group.dataset.countAnimated = "true";
+
+    const values = Array.from(group.querySelectorAll("[data-countup]"));
+    for (const node of values) {
+      const meta = parseCounterDisplay(node.dataset.countFinal || node.textContent);
+      if (!meta) continue;
+      await animateCounterValue(node, meta);
+      await new Promise((resolve) => window.setTimeout(resolve, STAT_COUNTER_STAGGER_MS));
+    }
+  };
+
+  const observer = new IntersectionObserver((entries, currentObserver) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      currentObserver.unobserve(entry.target);
+      void runCounterGroup(entry.target);
+    });
+  }, {
+    threshold: 0.35,
+    rootMargin: "0px 0px -10% 0px",
+  });
+
+  groups.forEach((group) => observer.observe(group));
 }
 
 function renderTechCards() {
@@ -649,7 +756,14 @@ function renderContactDetails() {
   document.querySelectorAll("[data-phone]").forEach((node) => { node.textContent = siteData.phone; });
   document.querySelectorAll("[data-whatsapp]").forEach((node) => { node.textContent = siteData.whatsapp; });
   document.querySelectorAll("[data-email]").forEach((node) => { node.textContent = siteData.email; });
-  document.querySelectorAll("[data-address]").forEach((node) => { node.textContent = siteData.address; });
+  document.querySelectorAll("[data-address]").forEach((node) => {
+    node.textContent = siteData.address;
+    if (node.tagName === "A") {
+      node.href = siteData.addressHref;
+      node.target = "_blank";
+      node.rel = "noopener noreferrer";
+    }
+  });
 }
 
 function validateForm(form) {
@@ -975,6 +1089,7 @@ function initIndustryShowcase() {
 document.addEventListener("DOMContentLoaded", () => {
   mountLayout();
   document.querySelectorAll("[data-stats]").forEach(renderStats);
+  initStatCounters();
   renderTechCards();
   renderServicePage();
   renderContactDetails();
